@@ -43,3 +43,68 @@ DATASOURCE_NAME=something3
 DATASOURCE_SYKRET=something4
 DATASOURCE_DB_NAME=something5
 These needed to be added to the 'mvn clean package' and when running .jar file as well.
+
+# DB Required
+## Install MySQL
+Install MySQL with Brew.
+Start MySQL: brew services start mysql
+Stop MySQL: brew services stop mysql
+Check if MySQL is running: brew services list
+Check if MySQL is running: ps aux | grep mysqld
+
+## Setup root user
+Optionaly run this command to create root creds: mysql_secure_installation
+Test root connection: mysql -u root -p
+Test to see root user exists: SELECT user, host FROM mysql.user;
+Exit or quit: quit
+
+## Create paul-dirac user
+log as root user and
+create paul_dirac user: CREATE USER 'paul_dirac'@'localhost' IDENTIFIED BY '123something';
+exit and log in as root user to giver privileges to paul_dirac
+give paul dirac all privileges to manage tables: GRANT ALL PRIVILEGES ON *.* TO 'paul_dirac'@'localhost' WITH GRANT OPTION;
+mysql> SELECT user, host FROM mysql.user;
++------------------+-----------+
+| user             | host      |
++------------------+-----------+
+| mysql.infoschema | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
+| paul_dirac       | localhost |
+| root             | localhost |
++------------------+-----------+
+
+This means you have a root and paul_dirac users you can connect as.
+
+## Create Database
+sign in as paul_dirac: mysql -u paul_dirac -p
+
+and create a database: CREATE DATABASE paul_dirac;
+give all privileges to paul_dirac on this database: GRANT ALL PRIVILEGES ON paul_dirac.* TO 'paul_dirac'@'localhost';
+flush privileges for good measure: FLUSH PRIVILEGES;
+Test DB access: USE paul_dirac;
+check database is there: SHOW DATABASES;
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| paul_dirac         |
+| performance_schema |
+| sys                |
++--------------------+
+
+## Connect through DB_Beaver
+Add a connection to MySQL. You may need to:
+Edit Connection
+Click Driver Properties tab
+Find allowPublicKeyRetrieval <--- set this to TRUE
+
+## Create Tables and Data
+Now that you are connected you can run the following SQL script to create tables
+1) student related: schema-student.sql, data-student.sql
+2) employee related: schema-employee.sql, data-employee.sql
+3) attorney related: schema-attorney.sql, data-attorney.sql
+
+Student data is intended to practice the most manual implementation of JPA/Hibernate where all the find, create, etc calls are implemented with Entity Manager.
