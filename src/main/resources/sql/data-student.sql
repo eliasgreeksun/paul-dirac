@@ -1,4 +1,4 @@
-INSERT INTO `student` (`first_name`, `last_name`, `email`) VALUES
+INSERT INTO `employee` (`first_name`, `last_name`, `email`) VALUES
 ('John', 'Doe', 'john.doe@example.com'),
 ('Mary', 'Smith', 'mary.smith@example.com'),
 ('Paul', 'Dirac', 'paul.dirac@example.com'),
