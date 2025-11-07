@@ -33,8 +33,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/v1/cars/**").authenticated()
                 // Allow preflight (see section 3)
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                // Employees related
                 .requestMatchers(HttpMethod.GET, "/api/employees").hasRole("EMPLOYEE")
-//                .requestMatchers(HttpMethod.POST, "/api/employees/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/employees/**").hasRole("MANAGER")
+                .requestMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 //.anyRequest().permitAll()
             )
