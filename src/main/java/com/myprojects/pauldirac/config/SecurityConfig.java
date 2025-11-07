@@ -18,6 +18,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         // Read endpoints
+                        .requestMatchers(HttpMethod.GET, "/actuator/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/students/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/employees/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/cars/**").authenticated()
