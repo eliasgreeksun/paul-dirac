@@ -44,6 +44,11 @@ DATASOURCE_SYKRET=something4
 DATASOURCE_DB_NAME=something5
 These needed to be added to the 'mvn clean package' and when running .jar file as well.
 
+## Run configuration
+pass env settings as such
+ACTUATOR_NAME=something1;ACTUATOR_SYKRET=something2;DATASOURCE_NAME=something3;DATASOURCE_SYKRET=something4;DATASOURCE_DB_NAME=something5
+Alternatively you could add these to .env file.
+
 # DB Required
 ## Install MySQL
 Install MySQL with Brew.
