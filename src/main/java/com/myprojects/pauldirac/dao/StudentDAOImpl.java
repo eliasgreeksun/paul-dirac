@@ -2,16 +2,12 @@ package com.myprojects.pauldirac.dao;
 
 import com.myprojects.pauldirac.entity.Student;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
-public class StudentDAOImpl implements StudentDAO {
+public class StudentDAOImpl implements StudentDAO{
 
     private EntityManager entityManager;
 
@@ -20,74 +16,25 @@ public class StudentDAOImpl implements StudentDAO {
         this.entityManager = entityManager;
     }
 
-    // Updates and modification require transactions
-    @Override
-    @Transactional
-    public void save(Student student) {
-        entityManager.persist(student);
-    }
-
-    @Override
-    public Student findById(Integer id) {
-        return entityManager.find(Student.class, id);
-    }
-
     @Override
     public List<Student> findAll() {
         TypedQuery<Student> myQuery = entityManager.createQuery("FROM Student", Student.class);
-        return myQuery.getResultList();
+        List<Student> myEmployees = myQuery.getResultList();
+        return myEmployees;
     }
 
     @Override
-    public List<Student> findByLastName(String lastName) {
-        TypedQuery<Student> myQuery = entityManager.createQuery("FROM Student WHERE lastName=:theData", Student.class);
-        myQuery.setParameter("theData", lastName);
-        return myQuery.getResultList();
+    public Student findById(long id) {
+        return null;
     }
 
     @Override
-    @Transactional
-    public int updateAllLastNames(String lastName) {
-        Query myQuery = entityManager.createQuery("UPDATE Student SET lastName=:theData");
-        myQuery.setParameter("theData", lastName);
-        int numberOfUpdatedRows = myQuery.executeUpdate();
-        return numberOfUpdatedRows;
+    public Student save(Student student) {
+        return null;
     }
 
     @Override
-    @Transactional
-    public Student updateLastNameById(int id, String lastName) {
-        Student myStudent = entityManager.find(Student.class, id);
-        if (myStudent != null) {
-            myStudent.setLastName(lastName);
-            entityManager.merge(myStudent);
-        }
-        return myStudent;
-    }
+    public void deleteById(long id) {
 
-    @Override
-    @Transactional
-    public Student update(Student student) {
-        entityManager.merge(student);
-        return student;
     }
-
-    @Override
-    @Transactional
-    public void deleteStudent(int id) {
-        Student studentToBeDeleted = entityManager.find(Student.class, id);
-        if (studentToBeDeleted != null) {
-            entityManager.remove(studentToBeDeleted);
-        }
-    }
-
-    @Override
-    @Transactional
-    public int deleteAllStudentsWithLastName(String lastName) {
-        Query myQuery = entityManager.createQuery("DELETE FROM Student WHERE lastName=:theData");
-        myQuery.setParameter("theData", lastName);
-        int numberOfRecordsDeleted = myQuery.executeUpdate();
-        return numberOfRecordsDeleted;
-    }
-
 }

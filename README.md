@@ -112,4 +112,11 @@ Now that you are connected you can run the following SQL script to create tables
 2) employee related: schema-employee.sql, data-employee.sql
 3) attorney related: schema-attorney.sql, data-attorney.sql
 
-Student data is intended to practice the most manual implementation of JPA/Hibernate where all the find, create, etc calls are implemented with Entity Manager.
+### Student
+Student data is intended to practice the most manual implementation of JPA/Hibernate.
+Here we will rely on the manual set up of the following Cmponents:
+1) StudentRestController
+2) Student DAO Interface and Implementation (Repository)
+3) Student Entity (Map of the DB Tables)
+4) Student DTO (Isolating Entity from Services)
+Key element here is an Entity Manager which we inject as a dependency. All the find, create, etc calls are implemented with Entity Manager.
