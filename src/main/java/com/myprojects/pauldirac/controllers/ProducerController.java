@@ -20,7 +20,6 @@ public class ProducerController {
 
     @PostMapping("/send")
     public ResponseEntity<String> send(@Valid @RequestBody MessageRequest req) {
-        log.info("***** TEST 1 *****");
         producer.send(req.topic(), req.key(), req.message());
         return ResponseEntity.accepted().body("queued");
     }

@@ -4,12 +4,14 @@ import com.myprojects.pauldirac.entity.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class StudentDAOImpl implements StudentDAO{
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public StudentDAOImpl(EntityManager entityManager) {
@@ -18,14 +20,17 @@ public class StudentDAOImpl implements StudentDAO{
 
     @Override
     public List<Student> findAll() {
-        TypedQuery<Student> myQuery = entityManager.createQuery("FROM Student", Student.class);
-        List<Student> myEmployees = myQuery.getResultList();
-        return myEmployees;
+        String query = "FROM Student";
+        TypedQuery<Student> myQuery = entityManager.createQuery(query, Student.class);
+        return myQuery.getResultList();
     }
 
     @Override
     public Student findById(long id) {
-        return null;
+        String query = "FROM Student s where s.id = :id";
+        TypedQuery<Student> myQuery = entityManager.createQuery(query, Student.class)
+                .setParameter("id", id);
+        return myQuery.getSingleResult();
     }
 
     @Override

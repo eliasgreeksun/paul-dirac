@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // Students related
                 .requestMatchers(HttpMethod.GET, "/api/v1/students").hasRole("EMPLOYEE")
+                .requestMatchers(HttpMethod.GET, "/api/v1/students/**").hasRole("EMPLOYEE")
                 .requestMatchers(HttpMethod.POST, "/api/v1/students/**").hasRole("MANAGER")
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/students/**").hasRole("ADMIN")
                 // Employees related
