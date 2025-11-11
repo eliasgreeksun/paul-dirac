@@ -43,4 +43,10 @@ public class StudentRestController {
         return ResponseEntity.ok("Student (id=" + id + ") deleted successfully.");
     }
 
+    @PutMapping("students/{id}")
+    public Student update(@PathVariable long id, @RequestBody Student student) {
+        Student studentToUpdate = studentService.findById(id);
+
+        return studentToUpdate;
+    }
 }
