@@ -11,4 +11,5 @@ public interface StudentService {
     List<Student> findAll();
     Student findById(long id);
     Student save(Student employee);
+    boolean deleteById(long id);
 }

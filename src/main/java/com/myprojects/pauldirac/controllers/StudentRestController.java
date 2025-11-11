@@ -3,6 +3,7 @@ package com.myprojects.pauldirac.controllers;
 import com.myprojects.pauldirac.entity.Student;
 import com.myprojects.pauldirac.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,10 +31,16 @@ public class StudentRestController {
 
     @PostMapping("/students")
     public Student addStudent(@RequestBody Student student) {
-        return student;
-//        return studentService.save(student);
+        if (student.getId() != 0L) {
+            student.setId(0);
+        }
+        return studentService.save(student);
     }
 
-
+    @DeleteMapping("students/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable long id) {
+        studentService.deleteById(id);
+        return ResponseEntity.ok("Student (id=" + id + ") deleted successfully.");
+    }
 
 }
