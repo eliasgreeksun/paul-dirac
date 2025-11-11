@@ -1,4 +1,4 @@
-package com.myprojects.pauldirac.controllers;
+package com.myprojects.pauldirac.exceptions;
 
 public class StudentNotFoundException extends RuntimeException {
     public StudentNotFoundException(String message) {

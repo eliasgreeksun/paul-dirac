@@ -1,43 +1,46 @@
 package com.myprojects.pauldirac.controllers;
 
-import com.myprojects.pauldirac.dao.StudentDAOImpl;
 import com.myprojects.pauldirac.entity.Student;
+import com.myprojects.pauldirac.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class StudentRestController {
 
-    StudentDAOImpl studentDAOImpl;
+    private final StudentService studentService;
 
     @Autowired
-    public StudentRestController(StudentDAOImpl studentDAOImpl) {
-        this.studentDAOImpl = studentDAOImpl;
+    public StudentRestController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping("/students")
-    public List<Student> getListOfStudents() {
-        List<Student> myStudents = new ArrayList<Student>();
-        myStudents.add(new Student("Ilja", "Goushcha","ilja@yahoo.com"));
-        myStudents.add(new Student("Mario", "Cook","mario@gmail.com"));
-        myStudents.add(new Student("Ben", "Shapiro","ben@gmail.com"));
-        return myStudents;
+    public List<Student> getStudents() {
+        return studentService.findAll();
     }
 
-    @GetMapping("/students/{studentId}")
-    public Student getStudentById(@PathVariable int studentId) {
-        Student response = studentDAOImpl.findById(studentId);
-        System.out.println("response: " + response);
-        if (response == null ) {
-            throw new StudentNotFoundException("student with id=" + studentId + " does not exist.");
+    @GetMapping("/students/{id}")
+    public Student getStudentById(@PathVariable long id) {
+        return studentService.findById(id);
+    }
+
+    @PostMapping("/students")
+    public Student addStudent(@RequestBody Student student) {
+        if (student.getId() != 0L) {
+            student.setId(0);
         }
-        return response;
+        return studentService.save(student);
+    }
+
+    @DeleteMapping("students/{id}")
+    public ResponseEntity<String> deleteById(@PathVariable long id) {
+        studentService.deleteById(id);
+        return ResponseEntity.ok("Student (id=" + id + ") deleted successfully.");
     }
 
 }

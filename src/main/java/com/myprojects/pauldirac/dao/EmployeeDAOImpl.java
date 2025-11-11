@@ -1,7 +1,6 @@
 package com.myprojects.pauldirac.dao;
 
 import com.myprojects.pauldirac.entity.Employee;
-import com.myprojects.pauldirac.entity.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
