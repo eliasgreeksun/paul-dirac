@@ -105,6 +105,13 @@
 			<version>2.8.14</version>
 		</dependency>
 
+        <!-- This was needed to fix transient vulnerability in org.springdoc -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.18.0</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>
