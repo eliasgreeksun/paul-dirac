@@ -1,9 +1,13 @@
 package com.myprojects.pauldirac.controllers;
 
+import com.myprojects.pauldirac.dto.StudentPatchDTO;
 import com.myprojects.pauldirac.entity.Student;
+import com.myprojects.pauldirac.mappers.StudentMapper;
 import com.myprojects.pauldirac.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,10 +17,15 @@ import java.util.List;
 public class StudentRestController {
 
     private final StudentService studentService;
+    private final StudentMapper studentMapper;
 
     @Autowired
-    public StudentRestController(StudentService studentService) {
+    public StudentRestController(
+            StudentService studentService,
+            StudentMapper studentMapper
+    ) {
         this.studentService = studentService;
+        this.studentMapper = studentMapper;
     }
 
     @GetMapping("/students")
@@ -43,4 +52,10 @@ public class StudentRestController {
         return ResponseEntity.ok("Student (id=" + id + ") deleted successfully.");
     }
 
+    @PutMapping("students/{id}")
+    public Student update(@PathVariable long id, @Valid @RequestBody StudentPatchDTO updates) {
+        Student studentToUpdate = studentService.findById(id);
+        studentMapper.updateStudentFromDto(updates, studentToUpdate);
+        return studentToUpdate;
+    }
 }
