@@ -4,8 +4,10 @@ import com.myprojects.pauldirac.dto.StudentPatchDTO;
 import com.myprojects.pauldirac.entity.Student;
 import com.myprojects.pauldirac.mappers.StudentMapper;
 import com.myprojects.pauldirac.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,7 +53,7 @@ public class StudentRestController {
     }
 
     @PutMapping("students/{id}")
-    public Student update(@PathVariable long id, @RequestBody StudentPatchDTO updates) {
+    public Student update(@PathVariable long id, @Valid @RequestBody StudentPatchDTO updates) {
         Student studentToUpdate = studentService.findById(id);
         studentMapper.updateStudentFromDto(updates, studentToUpdate);
         return studentToUpdate;
